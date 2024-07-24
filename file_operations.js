@@ -3,6 +3,8 @@ const path = require('path');
 const{ createFolder } = require("./folder_operations");
 
 async function getFiles(directoryPath) {
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'heif', 'svg'];
+
     try {
         const files = await fs.readdir(directoryPath);
         for (const file of files) {
@@ -16,13 +18,21 @@ async function getFiles(directoryPath) {
                 }
                 // File is NOT a folder - Getting the extension
 
-                const ext = path.extname(file);
+                let ext = path.extname(file);
+                let newFolderPath= "";
                 if(ext) {
-                    const folderName = ext.slice(1);
-                    const newFolderPath = await createFolder(directoryPath, folderName);
+                    if(imageExtensions.includes(ext.slice(1))) {
+                        newFolderPath = path.join(directoryPath, "Images");
+                    } else {
+                      ext = ext.toUpperCase();
+                      newFolderPath = path.join(directoryPath, `${ext} Files`);
+                    }
+
+                    await createFolder(newFolderPath);
                     const movedFilePath =  path.join(newFolderPath, file);
                     await fs.rename(filePath, movedFilePath);
                     console.log(`File moved to ${movedFilePath}`);
+                
 
                 }
             } catch (err){

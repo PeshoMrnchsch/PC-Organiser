@@ -2,5 +2,17 @@
   "dependencies": {
     "fs-extra": "^11.2.0",
     "node": "^22.4.0"
-  }
+  },
+  "devDependencies": {
+    "electron": "^31.2.1"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "name": "pc-organiser",
+  "version": "1.0.0",
+  "description": "App to arganise tour files in the directories in your computer.",
+  "main": "main.js",
+  "author": "Petar Marincheshki",
+  "license": "ISC"
 }
